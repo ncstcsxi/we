@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Immersion</title>
+  <link rel="stylesheet" href="yu.css">
+</head>
+<body>
+  <h1>CALAPAN CABLE CENTER</h1>
+  <h2>Work Immersion Experience</h2>
+
+  <section class="week-section-container">
+    <div class="week">
+      <h1 class="week-header"><span class="weeks">WEEK 1</span></h1>
+      <div class="week-exp"><h1 class="week-day">Experiences</h1></div>
+      <button class="view-button" onclick="openPopup('week1')">View</button>
+    </div>
+
+    <div class="week">
+      <h1 class="week-header"><span class="weeks">WEEK 2</span></h1>
+      <div class="week-exp"><h1 class="week-day">Experiences</h1></div>
+      <button class="view-button" onclick="openPopup('week2')">View</button>
+    </div>
+  </section>
+
+  <!-- Pop-up for Day Selection (Initially Hidden) -->
+  <div id="popup" class="popup-container">
+    <div class="popup-content">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <h2 id="popup-title">Select a Day</h2>
+      <div id="day-buttons" class="day-buttons"></div>
+    </div>
+  </div>
+
+  <!-- Content Section (Will Change Dynamically) -->
+  <div id="content" class="content-container">
+    <h2 id="content-title"></h2>
+    <p id="content-text"></p>
+    <button class="back-button" onclick="goBack()">Back</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    let currentWeek = "";
+
+    function openPopup(week) {
+      currentWeek = week;
+      document.getElementById("popup").style.display = "flex";
+      document.getElementById("popup-title").innerText = week === "week1" ? "Week 1 - Select a Day" : "Week 2 - Select a Day";
+
+      let dayButtonsContainer = document.getElementById("day-buttons");
+      dayButtonsContainer.innerHTML = ""; // Clear previous buttons
+
+      for (let i = 1; i <= 5; i++) {
+        let btn = document.createElement("button");
+        btn.innerText = "Day " + i;
+        btn.onclick = function() {
+          showContent(i);
+        };
+        dayButtonsContainer.appendChild(btn);
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function showContent(day) {
+      let contentData = {
+        "week1": {
+          "day1": "On Day 1 naging h.e. po.",
+          "day2": "Day 2 same as day 1.",
+          "day3": "On Day 3 same as day 2.",
+          "day4": "On Day 4 papatay na.",
+          "day5": "On Day 5 gusto na agad umuwi."
+        },
+        "week2": {
+          "day6": "Week 2 started with customer service training.",
+          "day7": "On Day 2, we observed fieldwork installations.",
+          "day8": "Day 3 involved network testing and diagnostics.",
+          "day9": "We focused on safety protocols on Day 4.",
+          "day10": "The final day was a review and evaluation."
+        }
+      };
+
+      let weekKey = currentWeek;
+      let dayKey = "day" + day;
+
+      document.getElementById("content-title").innerText = `Week ${weekKey === "week1" ? "1" : "2"} - Day ${day}`;
+      document.getElementById("content-text").innerText = contentData[weekKey][dayKey];
+
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    }
+
+    function goBack() {
+      document.getElementById("content").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
